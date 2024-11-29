@@ -1,26 +1,37 @@
 name: CI/CD Pipeline
+# nome da pipelne que vai aparecer no github
 
+# quando a pipeline vai ser executada, gatilhos
 on:
   push:
     branches:
       - main
+#
 
+#
 jobs:
   build:
     runs-on: ubuntu-latest
+# um etapa de trabalho definida
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
-
+#
     - name: Build Docker image
       run: docker build -t nodejs-ci-cd .
-
-    - name: Push Docker image to Docker Hub
+# envia a imagem para o docker hub , configurar os secrets no github primeiro
+#
+    - name: Push Docker image to Docker Hub  # nome de exempro
       env:
         DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: |
-        echo $DOCKER_HUB_PASSWORD | docker login -u $DOCKER_HUB_USERNAME --password-stdin
-        docker tag nodejs-ci-cd $DOCKER_HUB_USERNAME/nodejs-ci-cd
-        docker push $DOCKER_HUB_USERNAME/nodejs-ci-cd
+
+
+
+        echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+        docker tag nodejs-ci-cd ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
+        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
+# entra no docker hub e cria uma imagem com o nome nodejs-ci-cd
+# docker push envia a imagem para o docker hub

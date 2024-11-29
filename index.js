@@ -1,16 +1,16 @@
-const express = require('express');
-const path = require('path');
-const app = express();
-const port = 3000;
+const express = require('express'); // Importa o módulo Express
+const path = require('path'); // Importa o módulo Path
+const app = express(); // Cria uma instância do aplicativo Express
+const port = 3000; // Define a porta em que o servidor irá escutar
 
-// Middleware para processar dados do formulário
+// Middleware para processar dados do formulário temporarios que eu criei
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Servir arquivos estáticos
+// Servir arquivos estáticos da pasta 'public' mais posso direcionar até outro diretorio
 app.use(express.static('public'));
 
-// Rota principal para servir o formulário
+// Rota principal para servir o formulário HTML, 
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
