@@ -1,2 +1,2 @@
-# primeiro parte do projeto istalle o node js.
+# primeiro parte do projeto instale o node js.
 modifique o arquivo packe.json
