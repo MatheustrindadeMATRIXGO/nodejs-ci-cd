@@ -22,6 +22,8 @@ jobs:
     steps:  # apartir do momento que seguir os passos entra os steps " tarefas a serem feitas "
     - name: Checkout code  # geralmente a cada tarefa agente colocado um nome para atribuido apartir da tarefa atribuido que voce definir
       uses: actions/checkout@v2  # por baixo dos panos esse é um arquivo pre definido pelo o git hub que vai 
+      # essa ação vai clonar o meu repositorio para o ambiente de execução do workflows para eu acessar 
+      #e realizar as tarefas ou etapas que eu definir
       #clonar seu repositorio pra dentro do ambiente de execução e realizar teste
 #
     - name: Build Docker image   # nome que eu escolhi para clonar o repositorio para o ambiente de execução;
