@@ -1,22 +1,23 @@
 name: CI/CD Pipeline
-# nome da pipelne que vai aparecer no github
+# nome da pipelne, de sua preferencia, geralmente qual função ela ira executar.
 
-# quando a pipeline vai ser executada, gatilhos
-on:
-  push:
+# quando a pipeline vai ser executada, gatilhos no caso apartir de qual elemento escolhido ela iniciar seu trabalho/
+on:  # palavra chave.
+  push:  # gatilhos escolhido
     branches:
       - main
 #
 
-#
-jobs:
-  build:
-    runs-on: ubuntu-latest
+# inicio dos trabalhos que ela executará apartir do evento que foi definido.
+jobs: 
+  build:  #tarefa que foi defininda por voce.
+    runs-on: ubuntu-latest  #maquina a ser usada dentro do git hub para fazer esse acão "serviço"
 # um etapa de trabalho definida
 
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    steps:  # apartir do momento que seguir os passos entra os steps " tarefas a serem feitas "
+    - name: Checkout code  # geralmente a cada tarefa agente colocado um nome para atribuido apartir da tarefa atribuido que voce definir 
+      uses: actions/checkout@v2  # por baixo dos panos esse é um arquivo pre definido pelo o git hub que vai 
+      #clonar seu repositorio pra dentro do ambiente de execução
 #
     - name: Build Docker image
       run: docker build -t nodejs-ci-cd .
