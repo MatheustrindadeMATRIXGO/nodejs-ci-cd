@@ -8,19 +8,19 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-    
-    - name: Build Docker image
-      run: docker build -t nodejs-ci-cd .
-    
-    - name: Push Docker image to Docker Hub
-      env:
-        DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
-      run: |
-      echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
-        docker tag nodejs-ci-cd ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
-        docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: docker build -t nodejs-ci-cd .
+
+      - name: Push Docker image to Docker Hub
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+        run: |
+          echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+          docker tag nodejs-ci-cd ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
+          docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
