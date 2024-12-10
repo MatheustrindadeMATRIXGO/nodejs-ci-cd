@@ -21,6 +21,6 @@ jobs:
         DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
         DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: |
-         "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+      echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
         docker tag nodejs-ci-cd ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
