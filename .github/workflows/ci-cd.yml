@@ -1,45 +1,26 @@
 name: CI/CD Pipeline
-# nome da pipelne, de sua preferencia, geralmente qual função ela ira executar.
 
-# quando a pipeline vai ser executada, gatilhos no caso apartir de qual elemento escolhido ela iniciar seu trabalho/
-on:  # palavra chave.
-  push:  # gatilhos escolhido
+on:
+  push:
     branches:
       - main
-#
 
-# inicio dos trabalhos que ela executará apartir do evento que foi definido.
-jobs: 
-  build:  #tarefa que foi defininda por voce.
-    runs-on: ubuntu-latest  #maquina a ser usada dentro do git hub para fazer esse acão "serviço"
-    # Indica que o job será executado em um runner do Git com o sistema operacional Ubuntu mais recente.
-# um etapa de trabalho definida
-
-  #apartir daqui começa as tarefas individuais ou conjuntas vai depender de onde queremos chegar.
-
-  #
-
-    steps:  # apartir do momento que seguir os passos entra os steps " tarefas a serem feitas "
-    - name: Checkout code  # geralmente a cada tarefa agente colocado um nome para atribuido apartir da tarefa atribuido que voce definir
-      uses: actions/checkout@v2  # por baixo dos panos esse é um arquivo pre definido pelo o git hub que vai 
-      # essa ação vai clonar o meu repositorio para o ambiente de execução do workflows para eu acessar 
-      #e realizar as tarefas ou etapas que eu definir
-      #clonar seu repositorio pra dentro do ambiente de execução e realizar teste
-#
-    - name: Build Docker image   # nome que eu escolhi para clonar o repositorio para o ambiente de execução;
-      run: docker build -t nodejs-ci-cd .   #executa processo de construção de imagem
-
-# apartir daí de construir a imagem ele enviar a imagem para o docker hub
-    - name: Push Docker image to Docker Hub  # nome de exempro definir a tarefa a ser feita
-      env:  #variaveil de ambiente que eu usei que contei credenciais do docker hub par armazenar segredos.
-        DOCKER_HUB_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
-        DOCKER_HUB_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+    
+    - name: Build Docker image
+      run: docker build -t nodejs-ci-cd .
+    
+    - name: Push Docker image to Docker Hub
+      env:
+        DOCKER_USERNAME: ${{ secrets.DOCKER_HUB_USERNAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_HUB_PASSWORD }}
       run: |
-
-
-
-         "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
+        echo "${{ secrets.DOCKER_HUB_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_HUB_USERNAME }}" --password-stdin
         docker tag nodejs-ci-cd ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
         docker push ${{ secrets.DOCKER_HUB_USERNAME }}/nodejs-ci-cd
-# esse passo final recuperar minha credenciais do docker hub marcando um repositorio especifico e acesso e envio
-# docker push envia a imagem para o docker hub
